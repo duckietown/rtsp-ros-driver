@@ -6,11 +6,11 @@
     <arg name="camera_info_topic" default="camera_info" />
 
     <!-- RTSP camera info -->
-    <arg name="hostname" doc="hostname or IP of the rtsp camera" />
-    <arg name="username" doc="username for the rtsp camera" />
-    <arg name="password" doc="password for the rtsp camera" />
+    <arg name="hostname" default="172.31.168.46" doc="hostname or IP of the rtsp camera" />
+    <arg name="username" default="" doc="username for the rtsp camera" />
+    <arg name="password" default="" doc="password for the rtsp camera" />
     <arg name="port" default="554" doc="port of the rtsp camera" />
-    <arg name="stream" doc="name of the video stream published by the rtsp camera" />
+    <arg name="stream" default="s0" doc="name of the video stream published by the rtsp camera" />
 
     <group ns="$(arg camera_name)">
         <node pkg="rtsp_ros_driver" type="rtsp_driver_node" name="rtsp_driver_node" output="screen">
