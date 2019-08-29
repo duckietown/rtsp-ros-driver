@@ -5,7 +5,7 @@ import rospy
 import thread
 from cv_bridge import CvBridge
 from sensor_msgs.msg import CompressedImage
-from std_msgs.msg import Bool
+from std_msgs.msg import String
 
 class Camera(object):
     def __init__(self):
@@ -23,7 +23,7 @@ class Camera(object):
 
         # create publishers
         self.image_pub = rospy.Publisher(self.image_topic, CompressedImage, queue_size=1)
-        self.camera = rospy.Subscriber("~camera_switch", Bool, self.camera_switch_cb, queue_size=1)
+        self.camera = rospy.Subscriber("~camera_switch", String, self.camera_switch_cb, queue_size=1)
 
         # initialize ROS_CV_Bridge
         self.ros_cv_bridge = CvBridge()
@@ -56,10 +56,9 @@ class Camera(object):
             self.image_pub.publish( image_msg )
 
     def camera_switch_cb(self, data):
-        rospy.loginfo("Here1")
-        self.new_resource = "rtsp://duckie:quackquack3@172.31.168.124:88/videoMain"
+        rospy.loginfo(data.data)
+        self.new_resource = data.data
         self.change = True
-        rospy.loginfo("here2")
 
     def onShutdown(self):
         rospy.loginfo("[%s] Closing ip camera." % (self.node_name))
@@ -72,7 +71,6 @@ if __name__ == '__main__':
     print "Initializing ROS node... ",
     rospy.init_node('rtsp_camera_driver_node', anonymous=False)
     print "Done!"
-
     ip_cam_node = Camera()
     rospy.on_shutdown(ip_cam_node.onShutdown)
     thread.start_new_thread(ip_cam_node.startCapturing, ())

@@ -6,7 +6,7 @@
     <arg name="port" default="554" doc="port of the rtsp camera" />
     <arg name="stream" default="s0" doc="name of the video stream published by the rtsp camera" />
 
-    <node pkg="rtsp_ros_driver" type="rtsp_driver_node" name="rtsp_driver_node" output="screen">
+    <node pkg="rtsp_ros_driver" type="rtsp_driver_node.py" name="rtsp_driver_node" output="screen">
         <param name="rtsp_resource" value="rtsp://$(arg hostname):$(arg port)/$(arg stream)" />
         <param name="image_topic" value="$(arg image_topic)" />
     </node>
